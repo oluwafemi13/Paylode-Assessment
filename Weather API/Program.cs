@@ -6,7 +6,7 @@ using Weather_API.Data;
 using Weather_API.MappingConfiguration;
 
 var builder = WebApplication.CreateBuilder(args);
-var configuration = builder.Configuration;
+//var configuration = builder.Configuration;
 
 // Add services to the container.
 
@@ -16,8 +16,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddIdentityCore<User>()
     .AddRoles<IdentityRole>()
-    /*.AddEntityFrameworkStores<DbContext>()*/;
-builder.Services.AddAutoMapper(typeof(Mappings));
+    .AddEntityFrameworkStores<DatabaseContext>();
+builder.Services.AddAutoMapper(typeof(Program));
 
 //jwt Authentication
 builder.Services.AddAuthentication(op => {
@@ -33,9 +33,9 @@ builder.Services.AddAuthentication(op => {
         ValidateAudience = true,
         ValidateLifetime = true,
         ClockSkew = TimeSpan.Zero,
-        ValidIssuer = configuration["JwtSettings.Issuer"],
-        ValidAudience = configuration["JwtSettings.Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings.Key"]))
+        ValidIssuer = builder.Configuration["JwtSettings.Issuer"],
+        ValidAudience = builder.Configuration["JwtSettings.Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings.Key"]))
     };
 });
 
