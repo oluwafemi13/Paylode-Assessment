@@ -37,6 +37,19 @@ namespace Weather_API.Repositories
 
         }
 
+        public async Task<bool> DeleteWeatherInfo(int Id)
+        {
+            var find = await _context.weather.FindAsync(Id);
+            if(find is null)
+            {
+                return false;
+            }
+             _context.weather.Remove(find);
+            _context.SaveChanges();
+            return true;
+
+        }
+
         public async Task<Weather> GetWeatherByCity(string city)
         {
             var check = await _context.weather.FindAsync(city);

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Weather_API.DTO;
 using Weather_API.Models;
@@ -36,6 +37,7 @@ namespace Weather_API.Controllers
         }
 
         [HttpPost("CreateWeather")]
+        [Authorize(Roles ="Admin")]
         public async Task<ActionResult> CreateWeather([FromBody] WeatherDTO weather)
         {
             var create = await _weatherRepository.CreateWeather(weather);
@@ -43,10 +45,19 @@ namespace Weather_API.Controllers
         }
 
         [HttpPut("UpdateWeather")]
+        [Authorize(Roles ="Admin")]
         public async Task<ActionResult> UpdateWeather([FromBody] WeatherDTO weather)
         {
             var create = await _weatherRepository.UpdateWeatherInfo(weather);
             return Ok(create);
+        }
+
+        [HttpDelete("DeleteWeather")]
+        [Authorize(Roles ="Admin")]
+        public async Task<ActionResult<bool>> DeleteWeather(int id)
+        {
+            var delete = await _weatherRepository.DeleteWeatherInfo(id);
+            return Ok(delete);
         }
 
 

@@ -10,6 +10,6 @@ namespace Weather_API.Repositories.Interfaces
         Task<Weather> GetWeatherByCity(string city);
         Task<Weather> GetWeatherByCountry(string Country);
         Task<Weather> UpdateWeatherInfo(WeatherDTO weather);
-        //Task<bool> DeleteWeather()
+        Task<bool> DeleteWeatherInfo(int Id);
     }
 }
