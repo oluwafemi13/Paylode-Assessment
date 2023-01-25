@@ -4,7 +4,7 @@ namespace Weather_API.Models
 {
     public class Weather
     {
-        //public int Id { get; set; }
+        public int Id { get; set; }
         public int TemperatureCelcius { get; set; }
         public DateTime Date{ get; set; } = DateTime.Now;
         public string City { get; set; } = "Lagos";

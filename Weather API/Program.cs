@@ -1,9 +1,12 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Weather_API.Data;
 using Weather_API.MappingConfiguration;
+using Weather_API.Repositories;
+using Weather_API.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 //var configuration = builder.Configuration;
@@ -17,7 +20,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddIdentityCore<User>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<DatabaseContext>();
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(typeof(Mappings));
+builder.Services.AddScoped<IWeatherRepository, WeatherRepository>();
+var connString = builder.Configuration.GetConnectionString("DefaultCOnnection");
+builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connString));
 
 //jwt Authentication
 builder.Services.AddAuthentication(op => {
