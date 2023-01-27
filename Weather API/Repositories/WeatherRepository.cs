@@ -22,14 +22,14 @@ namespace Weather_API.Repositories
 
         public async Task<Weather> CreateWeather(WeatherDTO weather)
         {
-            var check = await _context.weather.FindAsync(weather.City);
+            /*var check = await _context.weather.FindAsync(weather.City);
             
             if (!(check is null)) 
             {
                await UpdateWeatherInfo(weather);
                 _logger.LogInformation($"Weather for {weather.City} in {check.Country} has been updated");
                 
-            }
+            }*/
             var map = _mapper.Map<Weather>(weather);
              await _context.weather.AddAsync(map);
             await _context.SaveChangesAsync();
@@ -70,9 +70,9 @@ namespace Weather_API.Repositories
             return check;
         }
 
-        public async Task<Weather> UpdateWeatherInfo(WeatherDTO weather)
+        public async Task<Weather> UpdateWeatherInfo(WeatherDTO weather, int id)
         {
-            var search = await _context.weather.FindAsync(weather.Country);
+            var search = await _context.weather.FindAsync(id);
             if(search is null)
             {
                 _logger.LogInformation("Weather Information Unavailable");

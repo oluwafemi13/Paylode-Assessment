@@ -2,6 +2,7 @@
 {
     public class WeatherDTO
     {
+        //public int Id { get; set; }
         public int TemperatureCelcius { get; set; }
         public DateTime Date { get; set; } = DateTime.Now;
         public string City { get; set; } 

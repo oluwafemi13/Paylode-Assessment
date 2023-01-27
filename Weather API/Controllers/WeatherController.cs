@@ -46,9 +46,9 @@ namespace Weather_API.Controllers
 
         [HttpPut("UpdateWeather")]
         [Authorize(Roles ="Admin")]
-        public async Task<ActionResult> UpdateWeather([FromBody] WeatherDTO weather)
+        public async Task<ActionResult> UpdateWeather([FromBody] WeatherDTO weather, int id)
         {
-            var create = await _weatherRepository.UpdateWeatherInfo(weather);
+            var create = await _weatherRepository.UpdateWeatherInfo(weather, id);
             return Ok(create);
         }
 
