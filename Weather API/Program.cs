@@ -22,7 +22,7 @@ builder.Services.AddIdentityCore<User>()
     .AddEntityFrameworkStores<DatabaseContext>();
 builder.Services.AddAutoMapper(typeof(Mappings));
 builder.Services.AddScoped<IWeatherRepository, WeatherRepository>();
-var connString = builder.Configuration.GetConnectionString("DefaultCOnnection");
+var connString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connString));
 
 //jwt Authentication
