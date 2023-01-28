@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Weather_API.Data;
 using Weather_API.DTO;
 using Weather_API.Models;
@@ -22,14 +24,7 @@ namespace Weather_API.Repositories
 
         public async Task<Weather> CreateWeather(WeatherDTO weather)
         {
-            /*var check = await _context.weather.FindAsync(weather.City);
-            
-            if (!(check is null)) 
-            {
-               await UpdateWeatherInfo(weather);
-                _logger.LogInformation($"Weather for {weather.City} in {check.Country} has been updated");
-                
-            }*/
+           
             var map = _mapper.Map<Weather>(weather);
              await _context.weather.AddAsync(map);
             await _context.SaveChangesAsync();
@@ -52,12 +47,13 @@ namespace Weather_API.Repositories
 
         public async Task<Weather> GetWeatherByCity(string city)
         {
-            var check = await _context.weather.FindAsync(city);
+            var check = await _context.weather.FindAsync(nameof(city));
             if (check is null)
             {
                 _logger.LogInformation($"{city} city not Found");
             }
-            return check;
+            var map = _mapper.Map<Weather>(check);
+            return map;
         }
 
         public async Task<Weather> GetWeatherByCountry(string country)
@@ -72,16 +68,19 @@ namespace Weather_API.Repositories
 
         public async Task<Weather> UpdateWeatherInfo(WeatherDTO weather, int id)
         {
+            
             var search = await _context.weather.FindAsync(id);
             if(search is null)
             {
                 _logger.LogInformation("Weather Information Unavailable");
             }
-           var map =  _mapper.Map<Weather>(weather);
-            await _context.weather.AddAsync(map);
-            await _context.SaveChangesAsync();
-            return map;
 
+            var map = _mapper.Map(weather, search);
+            _context.weather.Update(map);
+
+                await _context.SaveChangesAsync();
+
+            return map;
         }
     }
 }

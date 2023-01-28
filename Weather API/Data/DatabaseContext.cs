@@ -19,6 +19,11 @@ namespace Weather_API.Data
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<Weather>(entity =>
+            {
+                entity.HasKey(u=>u.Id);
+
+            });
             builder.Entity<IdentityRole>().HasData(
                 new IdentityRole
                 {

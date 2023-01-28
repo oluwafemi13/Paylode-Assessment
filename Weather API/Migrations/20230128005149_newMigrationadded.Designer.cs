@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Weather_API.Data;
 
@@ -11,9 +12,11 @@ using Weather_API.Data;
 namespace WeatherAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230128005149_newMigrationadded")]
+    partial class newMigrationadded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,14 +55,14 @@ namespace WeatherAPI.Migrations
                         new
                         {
                             Id = "3fcffc8c-cb7c-4b83-b201-347fa2b4263f",
-                            ConcurrencyStamp = "9f3319e6-ab72-42a4-b47a-86e2a6f58fd9",
+                            ConcurrencyStamp = "218caa23-c761-42e8-b9a4-c4723930f6b7",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = "e9a390cc-138f-4011-814f-f5f79df8ceb7",
-                            ConcurrencyStamp = "adb5a688-aec9-4b56-95d0-6ba2c1b00380",
+                            ConcurrencyStamp = "eba472bc-5d36-44de-b2ce-749ebadff58c",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -260,7 +263,7 @@ namespace WeatherAPI.Migrations
                         {
                             Id = "8e448afa-f008-446e-a52f-13c449803c2e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "21db8069-3361-4f40-9ce4-c6a21286426c",
+                            ConcurrencyStamp = "e2ef224e-3b8d-4a92-baf9-2f787288d1f6",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "solo",
@@ -268,9 +271,9 @@ namespace WeatherAPI.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIoFkxg9n5B1+PAXT+/c8pzPOxm7kAP7+0tsLVrI3CkaieHuO4Ag04fjZRX6k9iw4A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAmnXU/FxUiH618Ls83ZKtCO8RElcddP6Fs9DR1OzIW6SR0lwPINGOqZt7kg5qHBUw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d6e55696-a02d-4350-8850-52f0272cd0c1",
+                            SecurityStamp = "42b346e3-c3bd-49bc-aa3d-a85c8ff7cf5c",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
                         },
@@ -278,7 +281,7 @@ namespace WeatherAPI.Migrations
                         {
                             Id = "30a24107-d279-4e37-96fd-01af5b38cb27",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d1019c64-8dbd-4b30-8f34-1ef1e24f421b",
+                            ConcurrencyStamp = "eae2c272-b9a5-4221-b2ec-f8cc84954335",
                             Email = "jabikem@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "ikechukwu",
@@ -286,9 +289,9 @@ namespace WeatherAPI.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "JABIKEM@GMAIL.COM",
                             NormalizedUserName = "JABIKEM@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMasxAzjhGJYi0rMdmE+5qJMI2qFkwgdckZ//PQp60IyQanUJSntOKpEnZpy/EV2BA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIn6poPIrVsw29HzK1t1ixlBoG4CweI6Qv/C5tfF8UkgUsLXNqWViVv8tFtyOGcWGw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "cdba81fa-30a0-44e3-9a6e-2807d0e8c7ee",
+                            SecurityStamp = "98be6084-2b67-4e13-aa63-d5e3be40d3b0",
                             TwoFactorEnabled = false,
                             UserName = "jabikem@gmail.com"
                         });
@@ -296,12 +299,6 @@ namespace WeatherAPI.Migrations
 
             modelBuilder.Entity("Weather_API.Models.Weather", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -323,8 +320,6 @@ namespace WeatherAPI.Migrations
 
                     b.Property<int>("TemperatureCelcius")
                         .HasColumnType("int");
-
-                    b.HasKey("Id");
 
                     b.ToTable("weather");
                 });
