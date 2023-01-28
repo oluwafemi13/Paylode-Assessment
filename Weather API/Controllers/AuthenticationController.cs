@@ -51,7 +51,7 @@ namespace Weather_API.Controllers
                     return BadRequest(ModelState);
                 }
                 //crosscheck before submitting
-                await _userManager.AddToRoleAsync(user, "User");
+                await _userManager.AddToRoleAsync(user, $"{userDto.Role}");
                 return Ok();
             }
             catch (Exception ex)
