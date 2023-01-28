@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics.Metrics;
 using Weather_API.Data;
 using Weather_API.DTO;
 using Weather_API.Models;
@@ -47,26 +48,52 @@ namespace Weather_API.Repositories
 
         public async Task<Weather> GetWeatherByCity(string city)
         {
-            var check = await _context.weather.FindAsync(city);
-            var id = check.Id;
-            var found = await _context.weather.FindAsync(id);
-            
-            if (check is null)
+            var weather = new Weather();
+
+            var searched = _context.weather.Where(s => s.City == city);
+            if (searched is null)
             {
-                _logger.LogInformation($"{city} city not Found");
+                _logger.LogInformation($"{city} not Found");
             }
-            
-            return found;
+            //execute query
+            foreach (var search in searched)
+            {
+                weather.Id = search.Id;
+                weather.TemperatureCelcius = search.TemperatureCelcius;
+                weather.Date = search.Date;
+                weather.City = search.City;
+                weather.Country = search.Country;
+                weather.CloudFormation = search.CloudFormation;
+                weather.Description = search.Description;
+
+            }
+
+            return weather;
         }
 
         public async Task<Weather> GetWeatherByCountry(string country)
         {
-            var check = await _context.weather.FindAsync(country);
-            if (check is null)
+            var weather = new Weather();
+
+        var searched = _context.weather.Where(s => s.Country == country);
+            if (searched is null)
             {
                 _logger.LogInformation($"{country} not Found");
             }
-            return check;
+            //execute query
+            foreach(var search in searched)
+            {
+                weather.Id = search.Id;
+                weather.TemperatureCelcius = search.TemperatureCelcius;
+                weather.Date = search.Date;
+                weather.City = search.City;
+                weather.Country = search.Country;
+                weather.CloudFormation = search.CloudFormation;
+                weather.Description = search.Description;
+
+            }
+
+            return weather;
         }
 
         public async Task<Weather> UpdateWeatherInfo(WeatherDTO weather, int id)
