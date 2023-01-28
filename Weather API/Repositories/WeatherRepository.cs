@@ -47,13 +47,16 @@ namespace Weather_API.Repositories
 
         public async Task<Weather> GetWeatherByCity(string city)
         {
-            var check = await _context.weather.FindAsync(nameof(city));
+            var check = await _context.weather.FindAsync(city);
+            var id = check.Id;
+            var found = await _context.weather.FindAsync(id);
+            
             if (check is null)
             {
                 _logger.LogInformation($"{city} city not Found");
             }
-            var map = _mapper.Map<Weather>(check);
-            return map;
+            
+            return found;
         }
 
         public async Task<Weather> GetWeatherByCountry(string country)

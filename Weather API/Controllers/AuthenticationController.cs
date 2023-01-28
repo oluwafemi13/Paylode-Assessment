@@ -41,17 +41,17 @@ namespace Weather_API.Controllers
                 user.UserName = userDto.Email;
                 var result = await _userManager.CreateAsync(user, userDto.Password);
 
-                if (result.Succeeded is false)
+                if (result.Succeeded == false)
                 {
                     foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError(error.Code, error.Description);
                         _logger.LogError($"{error.Description}");
                     }
-                    return BadRequest();
+                    return BadRequest(ModelState);
                 }
                 //crosscheck before submitting
-                await _userManager.AddToRoleAsync(user, $"{userDto.Role}");
+                await _userManager.AddToRoleAsync(user, "User");
                 return Ok();
             }
             catch (Exception ex)
