@@ -71,29 +71,19 @@ namespace Weather_API.Repositories
             return weather;
         }
 
-        public async Task<Weather> GetWeatherByCountry(string country)
+        public async Task<IEnumerable<Weather>> GetWeatherByCountry(string country)
         {
-            var weather = new Weather();
+            
 
-        var searched = _context.weather.Where(s => s.Country == country);
+        var searched =await _context.weather.Where(s => s.Country == country).ToListAsync();
             if (searched is null)
             {
                 _logger.LogInformation($"{country} not Found");
             }
-            //execute query
-            foreach(var search in searched)
-            {
-                weather.Id = search.Id;
-                weather.TemperatureCelcius = search.TemperatureCelcius;
-                weather.Date = search.Date;
-                weather.City = search.City;
-                weather.Country = search.Country;
-                weather.CloudFormation = search.CloudFormation;
-                weather.Description = search.Description;
+            
+            var map = _mapper.Map<IEnumerable<Weather>>(searched);
 
-            }
-
-            return weather;
+            return map;
         }
 
         public async Task<Weather> UpdateWeatherInfo(WeatherDTO weather, int id)

@@ -8,7 +8,7 @@ namespace Weather_API.Repositories.Interfaces
         
         Task<Weather> CreateWeather(WeatherDTO weather);
         Task<Weather> GetWeatherByCity(string city);
-        Task<Weather> GetWeatherByCountry(string Country);
+        Task<IEnumerable<Weather>> GetWeatherByCountry(string Country);
         Task<Weather> UpdateWeatherInfo(WeatherDTO weather,int id);
         Task<bool> DeleteWeatherInfo(int Id);
     }
